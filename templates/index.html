@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NASA Picture of the Day</title>
+    
+</head>
+<body>
+    <h1>NASA Picture of the Day</h1>
+    <h3>Current Date: {{ current_date }}</h3>
+    <img src="{{ picture.url }}" alt="{{ picture.title }}">
+    <h2>{{ picture.title }}</h2>
+    <p>{{ picture.explanation }}</p>
+    <style>
+        body {
+            background-color: rgb(211, 210, 242);
+            text-align: center; 
+            font-size: larger;
+          
+        }
+        
+        h1, h2, p, h3 {
+            margin: 0 auto; 
+            background: linear-gradient(to right,rgb(37, 99, 37), rgb(49, 49, 237), indigo, rgb(195, 87, 195));
+            -webkit-background-clip: text; /* For Safari */
+            -webkit-text-fill-color: transparent; /* For Safari */
+            background-clip: text;
+            color: transparent;
+        }
+
+        h2 {
+            font-family: cursive;
+        }
+        img{
+            inline-size: 800px;
+            block-size: 500px;
+        }
+
+    </style>
+</body>
+</html>

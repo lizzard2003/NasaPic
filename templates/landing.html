@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to The NASA Exploration Page</title>
+    <style>
+        body {
+            background-color: rgb(15, 108, 201);
+        }
+        h1{
+          display: flex;
+          justify-content: center;
+          color: azure;
+          overflow: hidden;
+        white-space: nowrap;
+        animation: typewriter 2s steps(40) 1s normal both;
+          
+        }
+        @keyframes typewriter {
+            from { inline-size: 0; }
+            to { inline-size: 100%; }
+}
+        label,p{
+            color: #6e4ac2;
+            font-size: larger;
+            align-items: center;
+        }
+ 
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="POST">
+            <h1>NASAverse</h1>
+            {% if error %}
+                <p style="color:rgb(94, 220, 248)">{{ error }}</p>
+            {% endif %}
+            <img src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80">
+            <div style="position: absolute; inset-block-start: 50%; inset-inline-start: 50%; transform: translate(-50%, -50%); text-align: center; color: white; font-size: 24px; font-weight: bold;">
+            
+            <label>Email Address:</label><br>
+            <input type="text" name="username"><br>
+            <label>Password:</label><br>
+            <input type="password" name="password"><br>
+            <input type="submit" value="Login" style="padding:10px 20px; font-size: 20px;">
+        </form>
+        <p>Don't have an account? <a href="/signup">Sign up</a></p>
+    </div>
+</body>
+</html>
