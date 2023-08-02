@@ -15,23 +15,25 @@ def validate_registration(username,password):
     if not password:
         errors.append("Password is requred")
     return errors
-@app.route('/landing', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST']) # this gets user to the main page to sign up or login 
 def landing():
     if request.method =='POST':
-        username= request.form.get('username')
+        username= request.form.get('username') # this asks users for info 
         password = request.form.get('password')
 
         validate_errors = validate_registration(username, password)
         if validate_errors:
             error = ",".join(validate_errors)
-            return render_template('landing.html', error=error)
+            return render_template('signup.html', error=error)
 
         else:
             return render_template('landing.html')
     return render_template('landing.html', error ="")
 
-
-@app.route('/')
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+@app.route('/picturepage')
 def home():
     # Get the current date
     date_today = datetime.datetime.now().strftime("%Y-%m-%d")
