@@ -1,6 +1,8 @@
 import os
 from flask import Flask, render_template, request, url_for
 import requests
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 
 
 import datetime
@@ -8,26 +10,31 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-def validate_registration(username,password):
-    errors=[]
-    if not username:
-        errors.append("Username is required.")
-    if not password:
-        errors.append("Password is requred")
-    return errors
+#db = SQLAlchemy(app) # this is creating the database for our login 
+app.config['SQLALCHEMY_DATABASE_URI']= 'sqlite:///database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY']= 'thisisasecretkey2023'
+
+# this is going to be our table in the database
+#class User(db.Model,UserMixin):
+    #id= db.Column(db.Integer, primary_key=True)
+    #username= db.Column(db.String(20), nullable=False)
+    #password= db.Column(db.String(80), nullable=False)
+
+
 @app.route('/', methods=['GET', 'POST']) # this gets user to the main page to sign up or login 
 def landing():
     if request.method =='POST':
         username= request.form.get('username') # this asks users for info 
         password = request.form.get('password')
 
-        validate_errors = validate_registration(username, password)
-        if validate_errors:
-            error = ",".join(validate_errors)
-            return render_template('signup.html', error=error)
+        #validate_errors = validate_registration(username, password)
+        #if validate_errors:
+            #error = ",".join(validate_errors)
+            #return render_template('signup.html', error=error)
 
-        else:
-            return render_template('landing.html')
+        #else:
+            #return render_template('landing.html')
     return render_template('landing.html', error ="")
 
 @app.route('/signup')
