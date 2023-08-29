@@ -1,25 +1,29 @@
 import os
-from flask import Flask, render_template, request, url_for
-import requests
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, request
 from flask_login import UserMixin
-
-
+from flask_sqlalchemy import SQLAlchemy
 import datetime
 from dotenv import load_dotenv
+
 load_dotenv()
 
 app = Flask(__name__)
-#db = SQLAlchemy(app) # this is creating the database for our login 
-app.config['SQLALCHEMY_DATABASE_URI']= 'sqlite:///database.db'
+
+# Manually set the database URI
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY']= 'thisisasecretkey2023'
+app.config['SECRET_KEY'] = 'thisisasecretkey2023'
+
+# Initialize the Flask-SQLAlchemy extension
+db = SQLAlchemy(app)
+
+# ... continue with your code
 
 # this is going to be our table in the database
-#class User(db.Model,UserMixin):
-    #id= db.Column(db.Integer, primary_key=True)
-    #username= db.Column(db.String(20), nullable=False)
-    #password= db.Column(db.String(80), nullable=False)
+class User(db.Model,UserMixin):
+    id= db.Column(db.Integer, primary_key=True)
+    username= db.Column(db.String(20), nullable=False)
+    password= db.Column(db.String(80), nullable=False)
 
 
 @app.route('/', methods=['GET', 'POST']) # this gets user to the main page to sign up or login 
