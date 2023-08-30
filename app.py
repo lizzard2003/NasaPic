@@ -1,9 +1,12 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request, session
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 from dotenv import load_dotenv
+import requests
+
+
 
 load_dotenv()
 
@@ -17,33 +20,45 @@ app.config['SECRET_KEY'] = 'thisisasecretkey2023'
 # Initialize the Flask-SQLAlchemy extension
 db = SQLAlchemy(app)
 
-# ... continue with your code
-
 # this is going to be our table in the database
-class User(db.Model,UserMixin):
+class User(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     username= db.Column(db.String(20), nullable=False)
     password= db.Column(db.String(80), nullable=False)
 
+users={}
 
-@app.route('/', methods=['GET', 'POST']) # this gets user to the main page to sign up or login 
+@app.route('/') # this gets user to the main page to sign up or login 
 def landing():
+    return render_template('landing.html', error ="")
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     if request.method =='POST':
         username= request.form.get('username') # this asks users for info 
         password = request.form.get('password')
+        if username in users:
+            error= "Pick another name as user name"
+            return render_template('signup.html')
+        users[username]=password
 
-        #validate_errors = validate_registration(username, password)
-        #if validate_errors:
-            #error = ",".join(validate_errors)
-            #return render_template('signup.html', error=error)
+        session['username']= username
+        return redirect('/picturepage')
+    else:
+        return render_template('signup.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
 
-        #else:
-            #return render_template('landing.html')
-    return render_template('landing.html', error ="")
-
-@app.route('/signup')
-def signup():
-    return render_template('signup.html')
+        if username not in users or users[username] != password:
+            error = "Sorry, Incorrect username or password."
+            return render_template('login.html', error=error)
+        session['username'] = username
+        return redirect('/picturepage')
+    else:
+        return render_template('login.html')
 @app.route('/picturepage')
 def home():
     # Get the current date

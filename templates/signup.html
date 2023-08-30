@@ -5,11 +5,12 @@
     <style>
         body {
             background-color: rgb(66, 149, 233);
+          
         }
         h1{
           display: flex;
           justify-content: center;
-          color: azure;
+          color:blueviolet;
           overflow: hidden;
         white-space: nowrap;
         animation: typewriter 2s steps(40) 1s normal both;
@@ -24,22 +25,35 @@
             font-size: larger;
             align-items: center;
         }
+        h2{
+            color: blueviolet;
+        }
+        form{
+            text-align: center;
+        }
+        button{
+            padding:10px 20px; 
+            font-size: 20px;
+        }
+
  
 
     </style>
 </head>
 <body>
     <div class="container">
+        <h1> Welcome please fill out the following information to Register to access the site</h1>
         <form method="POST">
 
-            <h1> Welcome please fill out the following information to Register to access the site</h1>
+            
             <label>Email Address:</label><br>
             <input type="text" name="username"><br>
             <label>Password:</label><br>
             <input type="password" name="password"><br>
             <input type="submit" value="Register" style="padding:10px 20px; font-size: 20px;">
+            <h2> If you have already signed up <button>Login In </button></h2>
         </form>
-
+        
     </div>
 </body>
 </html>
