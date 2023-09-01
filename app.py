@@ -58,7 +58,7 @@ def login():
         session['username'] = username
         return redirect('/picturepage')
     else:
-        return render_template('login.html')
+        return render_template('/picturepage')
 @app.route('/picturepage')
 def home():
     # Get the current date
