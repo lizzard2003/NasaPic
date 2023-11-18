@@ -13,7 +13,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+"""app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'thisisasecretkey2023'
 
@@ -28,7 +28,7 @@ class User(db.Model):
     password= db.Column(db.String(80), nullable=False)
 
 users={}
-
+"""
 @app.route('/') # this gets user to the main page to sign up or login 
 def landing():
     error= None
@@ -52,7 +52,7 @@ def signup():
         return redirect('/picturepage')
     else:
         return render_template('signup.html', error= error)
-@app.route('/login', methods=['GET', 'POST'])
+"""@app.route('/login', methods=['GET', 'POST'])
 def login():
     error= None
     if request.method == 'POST':
@@ -71,7 +71,7 @@ def login():
             return render_template('login.html', error=error)
     else:
         return render_template('login.html', error=error)
-@app.route('/picturepage')
+@app.route('/picturepage')"""
 def home():
     # Get the current date
     date_today = datetime.datetime.now().strftime("%Y-%m-%d")
