@@ -5,3 +5,4 @@ services:
     env:
       - key: NASA_API_KEY
         fromDatabase: true
+    pythonVersion: 3.8
