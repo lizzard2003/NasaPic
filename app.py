@@ -13,7 +13,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+"""app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'thisisasecretkey2023'
 
@@ -28,8 +28,8 @@ class User(db.Model):
     password= db.Column(db.String(80), nullable=False)
 
 users={}
-
-@app.route('/') # this gets user to the main page to sign up or login 
+"""
+"""@app.route('/') # this gets user to the main page to sign up or login 
 def landing():
     error= None
     return render_template('landing.html', error ="")
@@ -51,8 +51,8 @@ def signup():
         session['username']= username
         return redirect('/picturepage')
     else:
-        return render_template('signup.html', error= error)
-@app.route('/login', methods=['GET', 'POST'])
+        return render_template('signup.html', error= error)"""""
+"""@app.route('/login', methods=['GET', 'POST'])
 def login():
     error= None
     if request.method == 'POST':
@@ -70,14 +70,14 @@ def login():
             error = "Sorry, incorrect username or password."
             return render_template('login.html', error=error)
     else:
-        return render_template('login.html', error=error)
-@app.route('/picturepage')
+        return render_template('login.html', error=error)"""
+@app.route('/')
 def home():
     # Get the current date
     date_today = datetime.datetime.now().strftime("%Y-%m-%d")
     
     # Fetch the NASA picture of the day
-    api_key = os.getenv("NASA_API_KEY", "default_value_or_alternative_method")
+    api_key = os.getenv("NASA_API_KEY")
 
     url = f"https://api.nasa.gov/planetary/apod?api_key={api_key}&date={date_today}"
     response = requests.get(url)
