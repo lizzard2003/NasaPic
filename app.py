@@ -13,7 +13,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-"""app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'thisisasecretkey2023'
 
@@ -28,7 +28,7 @@ class User(db.Model):
     password= db.Column(db.String(80), nullable=False)
 
 users={}
-"""
+
 @app.route('/') # this gets user to the main page to sign up or login 
 def landing():
     error= None
