@@ -77,7 +77,8 @@ def home():
     date_today = datetime.datetime.now().strftime("%Y-%m-%d")
     
     # Fetch the NASA picture of the day
-    api_key =os.getenv("NASA_API_KEY")
+    api_key = os.getenv("NASA_API_KEY", "default_value_or_alternative_method")
+
     url = f"https://api.nasa.gov/planetary/apod?api_key={api_key}&date={date_today}"
     response = requests.get(url)
     data = response.json()
