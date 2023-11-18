@@ -2,6 +2,7 @@ import os
 from flask import Flask, redirect, render_template, request, session
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import datetime
 from dotenv import load_dotenv
 import requests
@@ -12,13 +13,13 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Manually set the database URI
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'thisisasecretkey2023'
+#app.config['SECRET_KEY'] = 'thisisasecretkey2023'
 
 # Initialize the Flask-SQLAlchemy extension
 db = SQLAlchemy(app)
+migrate= Migrate(app, db)
 
 # this is going to be our table in the database
 class User(db.Model):
@@ -30,35 +31,46 @@ users={}
 
 @app.route('/') # this gets user to the main page to sign up or login 
 def landing():
+    error= None
     return render_template('landing.html', error ="")
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    error= None
     if request.method =='POST':
         username= request.form.get('username') # this asks users for info 
         password = request.form.get('password')
-        if username in users:
+        if User.query.filter_by(username=username).first():
             error= "Pick another name as user name"
-            return render_template('signup.html')
-        users[username]=password
+            return render_template('signup.html', error= error)
+        new_user = User(username=username, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
 
         session['username']= username
         return redirect('/picturepage')
     else:
-        return render_template('signup.html')
+        return render_template('signup.html', error= error)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error= None
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
 
-        if username not in users or users[username] != password:
-            error = "Sorry, Incorrect username or password."
+        user = User.query.filter_by(username=username, password=password).first()
+
+
+        if user:
+            session['username'] = username
+            
+            return redirect('/picturepage')
+        else:
+            error = "Sorry, incorrect username or password."
             return render_template('login.html', error=error)
-        session['username'] = username
-        return redirect('/picturepage')
     else:
-        return render_template('/picturepage')
+        return render_template('login.html', error=error)
 @app.route('/picturepage')
 def home():
     # Get the current date
