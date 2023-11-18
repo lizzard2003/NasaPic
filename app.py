@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#app.config['SECRET_KEY'] = 'thisisasecretkey2023'
+app.config['SECRET_KEY'] = 'thisisasecretkey2023'
 
 # Initialize the Flask-SQLAlchemy extension
 db = SQLAlchemy(app)
